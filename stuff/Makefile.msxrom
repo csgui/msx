@@ -1,0 +1,34 @@
+# MAKEFILE for 8/16K ROMs using SDCC compiler
+# ROMSIZE = 2000 for 8KBytes ROM or 4000 for 16KBytes ROM
+
+CFILENAME=register
+ROMFILENAME=register
+CODELOC=0x4020
+ROMSIZE=2000
+ASM=crt0_msxrom_minimal.asm
+REL=crt0_msxrom_minimal.rel
+
+all: clean bin/$(ROMFILENAME).rom
+	echo "Finished with success!"
+
+build:
+	mkdir build
+
+bin:
+	mkdir bin
+
+asm:
+	sdasz80 -o $(ASM)
+	mv $(REL) build/$(REL)
+
+build/$(CFILENAME).ihx: build bin asm
+	sdcc -mz80 -o build/ --code-loc $(CODELOC) --data-loc 0xC000 --use-stdout --no-std-crt0 build/$(REL) $(CFILENAME).c
+
+build/$(CFILENAME).bin: build/$(CFILENAME).ihx
+	hex2bin -e bin -l $(ROMSIZE) build/$(CFILENAME).ihx
+
+bin/$(ROMFILENAME).rom: build/$(CFILENAME).bin
+	cp build/$(CFILENAME).bin bin/$(ROMFILENAME).rom
+
+clean:
+	rm -rf build/ bin/

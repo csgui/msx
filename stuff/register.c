@@ -2,15 +2,13 @@ void putchar(void);
 
 void putchar(void) {
     __asm
-        ld a, #'C'
-        call 0x00a2
-        ld a, #'H'
-        call 0x00a2
-        ld a, #'R'
-        call 0x00a2
-        ld a, #'I'
+        ld a, #'M'
         call 0x00a2
         ld a, #'S'
+        call 0x00a2
+        ld a, #'X'
+        call 0x00a2
+        ld a, #' '
         call 0x00a2
 
         ret
