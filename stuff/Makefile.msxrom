@@ -1,5 +1,5 @@
-# MAKEFILE for 8/16K ROMs using SDCC compiler
-# ROMSIZE = 2000 for 8KBytes ROM or 4000 for 16KBytes ROM
+# MAKEFILE for MSX-ROM .ROM binaries
+# Set ROMSIZE = 2000 for 8KBytes ROM or 4000 for 16KBytes ROM
 
 CFILENAME=register
 ROMFILENAME=register
