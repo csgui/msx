@@ -1,12 +1,14 @@
-# MAKEFILE for 8/16K MSX binaries using SDCC compiler
+# MAKEFILE for MSX-BASIC .BIN binaries
 
 CFILENAME=register
-ROMFILENAME=register
-CODELOC=0x8117
-ASM=crt0_msxdos_minimal.asm
-REL=crt0_msxdos_minimal.rel
+BINFILENAME=register
+# Place in memory where source code should live.
+# CODELOC = HEADER_SIZE + ASM_CODE_SIZE
+CODELOC=0x800D
+ASM=crt0_msxbin_minimal.asm
+REL=crt0_msxbin_minimal.rel
 
-all: clean bin/$(ROMFILENAME).rom
+all: clean bin/$(BINFILENAME).bin
 	echo "Finished with success!"
 
 build:
@@ -25,8 +27,8 @@ build/$(CFILENAME).ihx: build bin asm
 build/$(CFILENAME).bin: build/$(CFILENAME).ihx
 	hex2bin -e bin build/$(CFILENAME).ihx
 
-bin/$(ROMFILENAME).rom: build/$(CFILENAME).bin
-	cp build/$(CFILENAME).bin bin/$(ROMFILENAME).rom
+bin/$(BINFILENAME).bin: build/$(CFILENAME).bin
+	cp build/$(CFILENAME).bin bin/$(CFILENAME).bin
 
 clean:
 	rm -rf build/ bin/
